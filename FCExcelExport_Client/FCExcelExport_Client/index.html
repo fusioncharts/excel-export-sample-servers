@@ -1,0 +1,100 @@
+﻿<html>
+<head>
+    <title>My first chart using FusionCharts Suite XT</title>
+    <script type="text/javascript" src="https://s3.amazonaws.com/fusionimplementation/fusioncharts-3.12.3-beta.1/fusioncharts.js"></script>
+
+</head>
+<body style="text-align:center">
+    <div id="chart-container">FusionCharts XT will load here!</div>
+    <br />
+    <div>Choose your server type and click on "Export to Excel"</div>
+    <br />
+    <div>
+        <label>Server Type :</label>
+        <select id="server" onchange="setText()">
+            <option value="localhost:8191/api/v1.0/export">MVC</option>
+            <option value="localhost:8191/FCExcelExport.aspx">A Simple Web Application</option>
+            <option value="localhost:8191/FCExcelExport">Web API</option>
+        </select>
+    </div>
+    <br />
+    <div>
+        <label>Default excelExportHandler :</label>
+        <lable id="handlerURL"></lable>
+    </div>
+</body>
+<script type="text/javascript">
+  FusionCharts.ready(function(){
+    fusioncharts = new FusionCharts({
+    type: 'column2d',
+    renderAt: 'chart-container',
+    width: '600',
+    height: '400',
+    dataFormat: 'json',
+    dataSource: {
+        "chart": {
+            "caption": "Monthly revenue for last year",
+            "subCaption": "Harry's SuperMart",
+            "xAxisName": "Month",
+            "yAxisName": "Revenues (In USD)",
+            "numberPrefix": "$",
+            "theme": "fint",
+            "exportEnabled": "1",
+            "exportExcelHandler":"http://localhost:8191/api/v1.0/export"
+        },
+
+        "data": [{
+            "label": "Jan",
+            "value": "420000"
+        }, {
+            "label": "Feb",
+            "value": "810000"
+        }, {
+            "label": "Mar",
+            "value": "720000"
+        }, {
+            "label": "Apr",
+            "value": "550000"
+        }, {
+            "label": "May",
+            "value": "910000"
+        }, {
+            "label": "Jun",
+            "value": "510000"
+        }, {
+            "label": "Jul",
+            "value": "680000"
+        }, {
+            "label": "Aug",
+            "value": "620000"
+        }, {
+            "label": "Sep",
+            "value": "610000"
+        }, {
+            "label": "Oct",
+            "value": "490000"
+        }, {
+            "label": "Nov",
+            "value": "900000"
+        }, {
+            "label": "Dec",
+            "value": "730000"
+        }]
+    }
+}
+);
+    fusioncharts.render();
+});
+</script>
+<script>
+    function setText() {
+        var url = "http://"+document.getElementById('server').value;
+        document.getElementById('handlerURL').innerHTML = url;
+        fusioncharts.setChartAttribute("exportExcelHandler", url); 
+     
+    }
+    (function () {
+        document.getElementById('handlerURL').innerHTML = document.getElementById('server').value;
+    })();
+</script>
+</html>
